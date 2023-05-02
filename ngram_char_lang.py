@@ -3,7 +3,7 @@ from json import load, dump
 from pandas import read_csv
 from string import punctuation
 from re import sub
-from time import perf_counter
+# from time import perf_counter
 from math import log
 
 
@@ -50,7 +50,7 @@ def main():
     if not path.isfile(cache_path):
         system(f"echo {{}} > {cache_path}")
 
-    start_time = perf_counter()
+    # start_time = perf_counter()
     csv_path = "csv/sentences.csv"
     if open(cache_path, "r", encoding="utf-8").read().strip() == "{}":
         langs_list, lang_ngrams_probs_list = get_langs_and_ngrams_log_probs(N, csv_path)
@@ -64,13 +64,13 @@ def main():
         langs_list = json_data["langs_list"]
         lang_ngrams_probs_list = json_data["lang_ngrams_probs_list"]
 
-    end_time = perf_counter()
-    total_probs = sum(sum(len(item) for item in item_list) for item_list in lang_ngrams_probs_list)
-    print(f"Searched in {len(langs_list)} languages and " + f"{total_probs:,} probability distributions in {end_time - start_time:.3f}s\n")
+    # end_time = perf_counter()
+    # total_probs = sum(sum(len(item) for item in item_list) for item_list in lang_ngrams_probs_list)
+    # print(f"Searched in {len(langs_list)} languages and " + f"{total_probs:,} probability distributions in {end_time - start_time:.3f}s\n")
     text = open("txt/input.txt", "r", encoding="utf-8").read().strip()[:MAX_INPUT_CHARS]
     text_ngrams = get_ngrams(text, N)
     log_prob_dist_list = [get_log_prob(text_ngrams, lang_ngrams_probs_list[i]) for i in range(len(langs_list))]
-    print(*[f"{lang}: {prob}" for lang, prob in zip(langs_list, log_prob_dist_list)],  sep="\n", end="\n\n")
+    # print(*[f"{lang}: {prob}" for lang, prob in zip(langs_list, log_prob_dist_list)],  sep="\n", end="\n\n")
     print(langs_list[log_prob_dist_list.index(max(log_prob_dist_list))])
 
 

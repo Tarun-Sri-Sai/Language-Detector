@@ -45,20 +45,20 @@ def main():
 
     csv_path = "csv/sentences.csv"
     if open(cache_path, "r", encoding="utf-8").read().strip() == "{}":
-        langs_list, lang_ngrams_probs_list = get_langs_and_ngrams_log_probs(N, csv_path)
+        langs_list, lang_ngrams_log_probs_list = get_langs_and_ngrams_log_probs(N, csv_path)
         cache = {
             "langs_list": langs_list, 
-            "lang_ngrams_probs_list": lang_ngrams_probs_list
+            "lang_ngrams_log_probs_list": lang_ngrams_log_probs_list
         }
         dump(cache, open(cache_path, "w", encoding="utf-8"), indent=4)
     else:
         json_data = load(open(cache_path, "r", encoding="utf-8"))
         langs_list = json_data["langs_list"]
-        lang_ngrams_probs_list = json_data["lang_ngrams_probs_list"]
+        lang_ngrams_log_probs_list = json_data["lang_ngrams_log_probs_list"]
 
     text = open("txt/input.txt", "r", encoding="utf-8").read().strip()[:MAX_INPUT_CHARS]
     text_ngrams = get_ngrams(text, N)
-    log_prob_dist_list = [get_log_prob(text_ngrams, lang_ngrams_probs_list[i]) for i in range(len(langs_list))]
+    log_prob_dist_list = [get_log_prob(text_ngrams, lang_ngrams_log_probs_list[i]) for i in range(len(langs_list))]
     print(langs_list[log_prob_dist_list.index(max(log_prob_dist_list))])
     end_time = perf_counter()
     print(f"\nProcess finished in {end_time - start_time:.2f}s")

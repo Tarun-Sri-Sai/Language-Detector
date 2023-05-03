@@ -61,7 +61,7 @@ def main():
     log_prob_dist_list = [get_log_prob(text_ngrams, lang_ngrams_log_probs_list[i]) for i in range(len(langs_list))]
     print(langs_list[log_prob_dist_list.index(max(log_prob_dist_list))])
     end_time = perf_counter()
-    print(f"\nProcess finished in {end_time - start_time:.2f}s")
+    print(f"\nProcess finished in {end_time - start_time:.2f}s", end="")
 
 
 if __name__ == "__main__":

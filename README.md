@@ -1,6 +1,6 @@
 # Language-Recognizer
 
-This repository contains a Python script `src/ngram_char_lang.py` along with two data files that the script uses for language recognition: `csv/sentences.csv` and `json/cache.json`.
+This repository contains a Python script `src/ngram_char_lang.py` along with two data files that the script uses for language recognition: `csv/sentences.csv` and `json/cache.json` and a `Makefile`.
 
 ## Usage
 
@@ -9,7 +9,7 @@ To use Language-Recognizer, you need to provide a text file that you want to det
 You can run the script using the following command:
 
 ```
-python ngram_char_lang.py
+make
 ```
 
 Note that this script requires Python 3 to run.

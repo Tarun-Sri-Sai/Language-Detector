@@ -7,15 +7,6 @@ from time import perf_counter
 from math import log
 
 
-def get_langs_and_ngrams_log_probs(n, csv_path):
-    train_csv = read_csv(csv_path, encoding="utf-8").dropna()
-    langs_list = train_csv["lang"].unique().tolist()
-    lang_range = range(len(langs_list))
-    lang_text_list = [" ".join([sentence for sentence in train_csv[train_csv["lang"] == lang]["sentence"]]) for lang in langs_list]
-    lang_ngrams_list = [get_ngrams(lang_text_list[i], n) for i in lang_range]
-    return langs_list, [compute_log_probs(lang_ngrams_list[i]) for i in lang_range]
-
-
 def get_ngrams(text, n):
     text_strip = sub(f"[\n\t {punctuation}]+", "", text)
     result = {}
@@ -29,6 +20,15 @@ def get_ngrams(text, n):
 def compute_log_probs(ngrams):
     sum_value = sum(value for _, value in ngrams.items())
     return {key: log(value) - log(sum_value) for key, value in ngrams.items()}
+
+
+def get_langs_and_ngrams_log_probs(n, csv_path):
+    train_csv = read_csv(csv_path, encoding="utf-8").dropna()
+    langs_list = train_csv["lang"].unique().tolist()
+    lang_range = range(len(langs_list))
+    lang_text_list = [" ".join([sentence for sentence in train_csv[train_csv["lang"] == lang]["sentence"]]) for lang in langs_list]
+    lang_ngrams_list = [get_ngrams(lang_text_list[i], n) for i in lang_range]
+    return langs_list, [compute_log_probs(lang_ngrams_list[i]) for i in lang_range]
 
 
 def get_log_prob(text_ngrams, lang_ngrams_log_probs):

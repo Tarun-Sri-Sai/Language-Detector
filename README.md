@@ -1,6 +1,6 @@
 # Language-Recognizer
 
-Language-Recognizer is a Python script `ngram_char_lang.py` that can detect the language of a given text. This repository contains the source code for this script along with two data files that the script uses for language recognition: `csv/sentences.csv` and `json/cache.json`.
+This repository contains a Python script `src/ngram_char_lang.py` along with two data files that the script uses for language recognition: `csv/sentences.csv` and `json/cache.json`.
 
 ## Usage
 

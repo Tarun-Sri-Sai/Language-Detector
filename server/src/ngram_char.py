@@ -37,11 +37,11 @@ def get_log_prob(text_ngrams, lang_ngrams_log_probs):
     return sum(lang_ngrams_log_probs.get(ngram, log(1e-10)) for ngram in text_ngrams)
 
 
-def predict(text):
+def detect_language(text):
     start_time = perf_counter()
     N = 3
     MAX_INPUT_CHARS = 1024
-    cache_path = path.join("cache", "cache.json")
+    cache_path = path.join("..", "cache", "cache.json")
     if not path.isfile(cache_path):
         system(f"echo {{}} > {cache_path}")
 

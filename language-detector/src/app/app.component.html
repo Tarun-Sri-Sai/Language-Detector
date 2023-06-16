@@ -1,0 +1,22 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-6 offset-md-3">
+      <h2 class="horizontal-center">Language Detector</h2>
+      <div class="form-group">
+        <label class="top-spacing" for="text">Enter Text:</label>
+        <textarea class="form-control" id="text" [(ngModel)]="textInput"></textarea>
+      </div>
+      <div class="horizontal-center">
+        <button class="btn btn-primary top-spacing" (click)="detectLanguage()" [disabled]="loading">
+          Detect Language
+        </button>
+      </div>
+      <div class="overlay" *ngIf="loading">
+        <div class="overlay-content">
+          <div class="spinner-border text-primary" role="status"></div>
+        </div>
+      </div>
+      <div class="result top-spacing horizontal-center" *ngIf="result">{{ result }}</div>
+    </div>
+  </div>
+</div>

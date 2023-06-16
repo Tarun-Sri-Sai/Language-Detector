@@ -66,4 +66,4 @@ def predict(text):
     result = langs_list[log_prob_dist_list.index(max(log_prob_dist_list))]
     end_time = perf_counter()
     print(f"Process finished in {end_time - start_time:.2f}s")
-    return result
+    return result.upper()

@@ -28,4 +28,10 @@ export class AppComponent {
         }
       })
   }
+
+  enterKey(event: KeyboardEvent) {
+    if (event.key === 'Enter') {
+      this.detectLanguage()
+    }
+  }
 }

@@ -4,7 +4,7 @@
       <h2 class="horizontal-center">Language Detector</h2>
       <div class="form-group">
         <label class="top-spacing" for="text">Enter Text:</label>
-        <textarea class="form-control" id="text" [(ngModel)]="textInput"></textarea>
+        <textarea class="form-control" id="text" [(ngModel)]="textInput" (keypress)="enterKey($event)"></textarea>
       </div>
       <div class="horizontal-center">
         <button class="btn btn-primary top-spacing" (click)="detectLanguage()" [disabled]="loading">

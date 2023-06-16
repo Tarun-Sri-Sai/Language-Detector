@@ -11,7 +11,7 @@ CORS(app)
 def detect_language_endpoint():
     input_text = request.args.get('input_text', '')
     language_code = detect_language(input_text)
-    return {"language_code": language_code}
+    return {'language_code': language_code}
 
 
 if __name__ == '__main__':

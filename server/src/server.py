@@ -1,16 +1,16 @@
-from flask import Flask, request
-from ngram_char import detect_language
-from flask_cors import CORS
+import flask
+import ngram_char as nc
+import flask_cors as fc
 
 
-app = Flask(__name__)
-CORS(app)
+app = flask.Flask(__name__)
+fc.CORS(app)
 
 
 @app.route('/detect-language', methods=['GET'])
 def detect_language_endpoint():
-    input_text = request.args.get('input_text', '')
-    language_code = detect_language(input_text)
+    input_text = flask.request.args.get('input_text', '')
+    language_code = nc.detect_language(input_text)
     return {'language_code': language_code}
 
 

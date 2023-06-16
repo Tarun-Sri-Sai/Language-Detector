@@ -1,14 +1,14 @@
-from os import path, system
-from json import load, dump
-from pandas import read_csv
-from string import punctuation
-from re import sub
-from time import perf_counter
-from math import log
+import os
+import json
+import pandas as pd
+import string
+import re
+import time
+import math
 
 
 def get_ngrams(text, n):
-    text_strip = sub(f'[\n\t {punctuation}]+', '', text)
+    text_strip = re.sub(f'[\n\t {string.punctuation}]+', '', text)
     result = {}
     for i in range(len(text_strip) - n + 1):
         ngram = text_strip[i: i + n]
@@ -19,11 +19,11 @@ def get_ngrams(text, n):
 
 def compute_log_probs(ngrams):
     sum_value = sum(value for _, value in ngrams.items())
-    return {key: log(value) - log(sum_value) for key, value in ngrams.items()}
+    return {key: math.log(value) - math.log(sum_value) for key, value in ngrams.items()}
 
 
 def get_langs_and_ngrams_log_probs(n, csv_path):
-    train_csv = read_csv(csv_path, encoding='utf-8').dropna()
+    train_csv = pd.read_csv(csv_path, encoding='utf-8').dropna()
     langs_list = train_csv['lang'].unique().tolist()
     lang_range = range(len(langs_list))
     lang_text_list = [' '.join(
@@ -34,18 +34,18 @@ def get_langs_and_ngrams_log_probs(n, csv_path):
 
 
 def get_log_prob(text_ngrams, lang_ngrams_log_probs):
-    return sum(lang_ngrams_log_probs.get(ngram, log(1e-10)) for ngram in text_ngrams)
+    return sum(lang_ngrams_log_probs.get(ngram, math.log(1e-10)) for ngram in text_ngrams)
 
 
 def detect_language(text):
-    start_time = perf_counter()
+    start_time = time.perf_counter()
     N = 3
     MAX_INPUT_CHARS = 1024
-    cache_path = path.join('cache', 'cache.json')
-    if not path.isfile(cache_path):
-        system(f'echo {{}} > {cache_path}')
+    cache_path = os.path.join('cache', 'cache.json')
+    if not os.path.isfile(cache_path):
+        os.system(f'echo {{}} > {cache_path}')
 
-    csv_path = path.join('data', 'sentences.csv')
+    csv_path = os.path.join('data', 'sentences.csv')
     if open(cache_path, 'r', encoding='utf-8').read().strip() == '{}':
         langs_list, lang_ngrams_log_probs_list = get_langs_and_ngrams_log_probs(
             N, csv_path)
@@ -54,14 +54,14 @@ def detect_language(text):
             'lang_ngrams_log_probs_list': lang_ngrams_log_probs_list
         }
         print(f'Writing cache to {cache_path}')
-        dump(cache, open(cache_path, 'w', encoding='utf-8'), indent=4)
+        json.dump(cache, open(cache_path, 'w', encoding='utf-8'), indent=4)
     else:
         print(f'Reading cache from {cache_path}')
-        json_data = load(open(cache_path, 'r', encoding='utf-8'))
+        json_data = json.load(open(cache_path, 'r', encoding='utf-8'))
         langs_list = json_data['langs_list']
         lang_ngrams_log_probs_list = json_data['lang_ngrams_log_probs_list']
 
-    print(f'Processed {len(langs_list)} languages in {perf_counter() - start_time:.2f}s')
+    print(f'Processed {len(langs_list)} languages in {time.perf_counter() - start_time:.2f}s')
 
     text = text[:MAX_INPUT_CHARS]
     text_ngrams = get_ngrams(text, N)

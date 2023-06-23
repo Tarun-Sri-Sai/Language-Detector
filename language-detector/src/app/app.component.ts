@@ -13,7 +13,11 @@ export class AppComponent {
 
   constructor(private http: HttpClient) { }
 
-  detectLanguage() {
+  detectLanguage(): void {
+    if (!this.isValidLength()) {
+      return
+    }
+
     this.loading = true
 
     this.http.get<any>(`http://localhost:5000/detect-language?input_text=${this.textInput}`)
@@ -29,10 +33,14 @@ export class AppComponent {
       })
   }
 
-  enterKey(event: KeyboardEvent) {
+  enterKey(event: KeyboardEvent): void {
     if (event.key === 'Enter') {
       event.preventDefault()
       this.detectLanguage()
     }
+  }
+
+  isValidLength(): boolean {
+    return this.textInput.trim().replaceAll(/\s+/g, ' ').length >= 10
   }
 }

@@ -9,11 +9,20 @@ import { HttpClient } from '@angular/common/http'
 export class AppComponent {
   textInput: string = ''
   result: string = ''
+  private timeout: boolean = false
 
   constructor(private http: HttpClient) { }
 
   detectLanguage(): void {
+    if (this.timeout) {
+      console.log('Not running because of timeout')
+      return
+    }
+
+    this.timeout = true
+
     if (!this.isValidLength()) {
+      this.resetTimeout(1000)
       return
     }
 
@@ -26,9 +35,17 @@ export class AppComponent {
           console.error('Error occurred during language detection:', error)
         }
       })
+
+    this.resetTimeout(1000)
   }
 
   isValidLength(): boolean {
     return this.textInput.trim().replaceAll(/\s+/g, ' ').length >= 10
+  }
+
+  resetTimeout(delay: number): void {
+    setTimeout(() => {
+      this.timeout = false
+    }, 1000)
   }
 }

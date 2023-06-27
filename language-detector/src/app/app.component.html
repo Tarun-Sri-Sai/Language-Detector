@@ -4,19 +4,9 @@
       <h2 class="horizontal-center top-spacing">Language Detector</h2>
       <div class="form-group">
         <label class="top-spacing" for="text">Enter Text:</label>
-        <textarea class="form-control" id="text" [(ngModel)]="textInput" (keypress)="enterKey($event)"></textarea>
+        <textarea class="form-control" id="text" [(ngModel)]="textInput" (input)="detectLanguage()"></textarea>
         <div *ngIf="!isValidLength()" class="alert alert-warning">
           Please enter atleast 10 characters
-        </div>
-      </div>
-      <div class="horizontal-center">
-        <button class="btn btn-primary top-spacing" (click)="detectLanguage()" [disabled]="loading">
-          Detect Language
-        </button>
-      </div>
-      <div class="overlay" *ngIf="loading">
-        <div class="overlay-content">
-          <div class="spinner-border text-primary" role="status"></div>
         </div>
       </div>
       <div class="result top-spacing horizontal-center" *ngIf="result">{{ result }}</div>

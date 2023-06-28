@@ -5,9 +5,7 @@
       <div class="form-group">
         <label class="top-spacing" for="text">Enter Text:</label>
         <textarea class="form-control" id="text" [(ngModel)]="textInput" (input)="detectLanguage()"></textarea>
-        <div *ngIf="!isValidLength()" class="alert alert-warning">
-          Please enter atleast 10 characters
-        </div>
+        <div *ngIf="!isValidLength()" class="alert alert-warning">Please enter atleast 10 characters</div>
       </div>
       <div class="result top-spacing horizontal-center" *ngIf="result">{{ result }}</div>
     </div>

@@ -37,17 +37,20 @@ class App:
             }
 
             print(f'Writing cache to {self.cache_path}')
-            json.dump(cache, open(self.cache_path, 'w', encoding='utf-8'), indent=4)
+            with open(self.cache_path,'w', encoding='utf-8') as cache_writer:
+                json.dump(cache, cache_writer, indent=4)
+
         else:
             print(f'Reading cache from {self.cache_path}')
-            json_data = json.load(open(self.cache_path, 'r', encoding='utf-8'))
+            with open(self.cache_path, 'r', encoding='utf-8') as cache_reader:
+                json_data = json.load(cache_reader)
 
             self.langs_list = json_data['langs_list']
             self.lang_ngrams_log_probs_list = json_data['lang_ngrams_log_probs_list']
 
     def get_csv_data(self):
         return pd.read_csv(self.csv_path, encoding='utf-8').dropna()
-    
+
     def get_langs(self):
         return self.csv_data['lang'].unique().tolist()
 
@@ -65,7 +68,7 @@ class App:
         return {
             key: math.log(value) - math.log(sum_value) for key, value in ngrams.items()
         }
-    
+
     def get_lang_ngrams_log_probs(self):
         lang_range = range(len(self.langs_list))
 
@@ -83,7 +86,7 @@ class App:
         return sum(lang_ngrams_log_probs.get(ngram, math.log(1e-10)) for ngram in text_ngrams)
 
     def detect(self, text):
-        text = text[:self.MAX_INPUT_CHARS]
+        text = text[: self.MAX_INPUT_CHARS]
 
         text_ngrams = self.get_ngrams(text, self.N)
 
@@ -91,5 +94,7 @@ class App:
             self.get_log_prob(text_ngrams, self.lang_ngrams_log_probs_list[i]) for i in range(len(self.langs_list))
         ]
 
-        result = self.langs_list[log_prob_dist_list.index(max(log_prob_dist_list))]
+        result = self.langs_list[
+            log_prob_dist_list.index(max(log_prob_dist_list))
+        ]
         return result.upper()

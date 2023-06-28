@@ -11,11 +11,19 @@ class App:
         self.N = 3
         self.MAX_INPUT_CHARS = 1024
 
-        self.cache_path = os.path.join('..', 'cache', 'cache.json')
-        self.csv_path = os.path.join('..', 'data', 'sentences.csv')
+        self.cache_dir = os.path.join('..', 'cache')
+        if not os.path.isdir(self.cache_dir):
+            os.mkdir(self.cache_dir)
 
+        self.csv_dir = os.path.join('..', 'data')
+        if not os.path.isdir(self.csv_dir):
+            os.mkdir(self.csv_dir)
+
+        self.cache_path = os.path.join(self.cache_dir, 'cache.json')
         if not os.path.isfile(self.cache_path):
             os.system(f'echo {{}} > {self.cache_path}')
+
+        self.csv_path = os.path.join(self.csv_dir, 'data.csv')
 
         if open(self.cache_path, 'r', encoding='utf-8').read().strip() == '{}':
             (self.langs_list,

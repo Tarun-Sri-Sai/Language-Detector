@@ -1,5 +1,6 @@
-import flask as fl
 from app import App
+
+import flask as fl
 import flask_cors as fc
 
 

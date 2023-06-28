@@ -7,7 +7,7 @@
         <textarea class="form-control" id="text" [(ngModel)]="textInput" (input)="detectLanguage()"></textarea>
         <div *ngIf="!isValidLength()" class="alert alert-warning">Please enter atleast 10 characters</div>
       </div>
-      <div class="result top-spacing horizontal-center" *ngIf="result">{{ result }}</div>
+      <h6 class="result top-spacing horizontal-center" *ngIf="result">{{ result }}</h6>
     </div>
   </div>
 </div>

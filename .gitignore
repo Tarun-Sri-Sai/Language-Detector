@@ -1,3 +1,3 @@
-server/data/data.csv
+server/data/
 server/cache/
 server/src/__pycache__/

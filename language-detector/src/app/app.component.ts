@@ -37,7 +37,7 @@ export class AppComponent {
         }
       })
 
-    this.resetTimeout(1000)
+    this.resetTimeout(500)
   }
 
   isValidLength(): boolean {
@@ -47,6 +47,6 @@ export class AppComponent {
   resetTimeout(delay: number): void {
     setTimeout(() => {
       this.timeout = false
-    }, 1000)
+    }, delay)
   }
 }

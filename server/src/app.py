@@ -23,7 +23,7 @@ class App:
         if not os.path.isfile(self.cache_path):
             os.system(f'echo {{}} > {self.cache_path}')
 
-        self.csv_path = os.path.join(self.csv_dir, 'data.csv')
+        self.csv_path = os.path.join(self.csv_dir, 'data_33k.csv')
 
         if open(self.cache_path, 'r', encoding='utf-8').read().strip() == '{}':
             self.csv_data = self.get_csv_data()

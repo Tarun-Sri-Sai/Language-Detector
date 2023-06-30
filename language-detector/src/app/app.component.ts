@@ -10,6 +10,7 @@ export class AppComponent {
   textInput: string = ''
   result: string = ''
   private timeout: boolean = false
+  minCharacters: number = 30
 
   constructor(private http: HttpClient) { }
 
@@ -40,7 +41,7 @@ export class AppComponent {
   }
 
   isValidLength(): boolean {
-    return this.textInput.trim().replaceAll(/\s+/g, ' ').length >= 10
+    return this.textInput.trim().replaceAll(/\s+/g, ' ').length >= 30
   }
 
   resetTimeout(delay: number): void {

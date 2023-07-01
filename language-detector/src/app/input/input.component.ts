@@ -10,7 +10,7 @@ import { HttpClient } from '@angular/common/http'
 export class InputComponent {
   textInput: string = ''
   private timeout: boolean = false
-  minCharacters: number = 30
+  minCharacters: number = 20
   private timeoutMillis: number = 500
 
   constructor(private http: HttpClient, private app: AppService) { }

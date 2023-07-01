@@ -11,6 +11,7 @@ export class InputComponent {
   textInput: string = ''
   private timeout: boolean = false
   minCharacters: number = 30
+  private timeoutMillis: number = 500
 
   constructor(private http: HttpClient, private app: AppService) { }
 
@@ -23,7 +24,7 @@ export class InputComponent {
     this.timeout = true
 
     if (!this.isValidLength()) {
-      this.resetTimeout(1000)
+      this.resetTimeout()
       return
     }
 
@@ -37,16 +38,16 @@ export class InputComponent {
         }
       })
 
-    this.resetTimeout(500)
+    this.resetTimeout()
   }
 
   isValidLength(): boolean {
-    return this.textInput.trim().replaceAll(/\s+/g, ' ').length >= 30
+    return this.textInput.trim().replaceAll(/\s+/g, ' ').length >= this.minCharacters
   }
 
-  resetTimeout(delay: number): void {
+  resetTimeout(): void {
     setTimeout(() => {
       this.timeout = false
-    }, delay)
+    }, this.timeoutMillis)
   }
 }

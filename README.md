@@ -13,7 +13,12 @@ Language Detector is an application that can detect the language of a text acros
 
 ### Setup
 
-- [Repository](https://github.com/Tarun-Sri-Sai/Language-Detector.git) can be forked using `git fork`.
+- Repository can be forked using:
+
+    ```bash
+    git fork https://github.com/Tarun-Sri-Sai/Language-Detector.git
+    ```
+
 - For Windows, navigating to the repository in Command Prompt and running the following command will finish setup:
 
     ```bash

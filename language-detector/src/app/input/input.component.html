@@ -1,0 +1,11 @@
+<h5 class="form-group">
+    <label class="top-spacing" for="text">
+        Enter Text:
+    </label>
+    <textarea class="form-control top-spacing" id="text" [(ngModel)]="this.app.textInput"
+              (input)="this.app.detectLanguage()">
+    </textarea>
+</h5>
+<div *ngIf="!this.app.isValidLength()" class="alert alert-warning">
+    Please enter atleast {{ this.app.minCharacters }} characters
+</div>

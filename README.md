@@ -2,7 +2,7 @@
 
 ## About
 
-Language Detector is an application that can detect the language of a text across 135 languages. It only requires 30 characters to accurately detect 90% of text from the language if it maintains proper punctuation and grammar.
+Language Detector is an application that can detect the language of a text across 135 languages. It only requires 20 characters to accurately detect 90% of text from the language if it maintains proper punctuation and grammar.
 
 ## Getting Started
 

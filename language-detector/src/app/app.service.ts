@@ -1,50 +1,10 @@
 import { Injectable } from '@angular/core'
-import { HttpClient } from '@angular/common/http'
 
 @Injectable({
   providedIn: 'root'
 })
 export class AppService {
-  textInput: string = ''
   result: string = ''
-  private timeout: boolean = false
-  minCharacters: number = 30
-
-  constructor(private http: HttpClient) { }
-
-  detectLanguage(): void {
-    if (this.timeout) {
-      console.log('Not running because of timeout')
-      return
-    }
-
-    this.timeout = true
-
-    if (!this.isValidLength()) {
-      this.resetTimeout(1000)
-      return
-    }
-
-    this.http.get<any>(`http://localhost:5000/detect-language?input_text=${this.textInput}`)
-      .subscribe({
-        next: (response) => {
-          this.result = `This text is in ${response.language_code}`
-        },
-        error: (error) => {
-          console.error('Error occurred during language detection:', error)
-        }
-      })
-
-    this.resetTimeout(500)
-  }
-
-  isValidLength(): boolean {
-    return this.textInput.trim().replaceAll(/\s+/g, ' ').length >= 30
-  }
-
-  resetTimeout(delay: number): void {
-    setTimeout(() => {
-      this.timeout = false
-    }, delay)
-  }
+  
+  constructor() { }
 }

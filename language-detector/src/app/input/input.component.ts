@@ -32,7 +32,7 @@ export class InputComponent {
   }
 
   computeLanguage(): void {
-    this.http.post<any>('http://localhost:5000/detect-language', { 'text_input': this.textInput })
+    this.http.put<any>('http://localhost:5000/detect-language', { 'text_input': this.textInput })
       .subscribe({
         next: (response) => {
           this.getLanguageCode()
@@ -48,22 +48,11 @@ export class InputComponent {
     .subscribe({
       next: (response) => {
         this.app.result = response['language_code']
-        this.clearResource()
       },
       error: (error) => {
         console.error("Couldn't get language due to: ", error)
       }
     })
-  }
-
-  clearResource(): void {
-    this.http.delete<any>('http://localhost:5000/detect-language')
-      .subscribe({
-        next: (response) => { },
-        error: (error) => {
-          console.error("Couldn't delete language data due to: ", error)
-        }
-      })
   }
 
   isValidLength(): boolean {

@@ -105,6 +105,3 @@ class App:
 
     def get_language(self):
         return self.language_code
-
-    def clear_language(self):
-        self.language_code = ''

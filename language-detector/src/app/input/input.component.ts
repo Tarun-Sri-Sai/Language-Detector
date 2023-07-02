@@ -17,7 +17,6 @@ export class InputComponent {
 
   detectLanguage(): void {
     if (this.timeout) {
-      console.log('Not running because of timeout')
       return
     }
 

@@ -15,38 +15,40 @@ class App:
         if not os.path.isdir(self.cache_dir):
             os.mkdir(self.cache_dir)
 
-        self.csv_dir = os.path.join('..', 'data')
-        if not os.path.isdir(self.csv_dir):
-            os.mkdir(self.csv_dir)
-
         self.cache_path = os.path.join(self.cache_dir, 'cache.json')
         if not os.path.isfile(self.cache_path):
             os.system(f'echo {{}} > {self.cache_path}')
 
+        self.csv_dir = os.path.join('..', 'data')
         self.csv_path = os.path.join(self.csv_dir, 'data_13k.csv')
 
         if open(self.cache_path, 'r', encoding='utf-8').read().strip() == '{}':
-            self.csv_data = self.get_csv_data()
-
-            self.langs_list = self.get_langs()
-            self.lang_ngrams_log_probs_list = self.get_lang_ngrams_log_probs()
-
-            cache = {
-                'langs_list': self.langs_list,
-                'lang_ngrams_log_probs_list': self.lang_ngrams_log_probs_list
-            }
-
-            print(f'Writing cache to {self.cache_path}')
-            with open(self.cache_path,'w', encoding='utf-8') as cache_writer:
-                json.dump(cache, cache_writer, indent=4)
-
+            self.write_to_cache()
         else:
-            print(f'Reading cache from {self.cache_path}')
-            with open(self.cache_path, 'r', encoding='utf-8') as cache_reader:
-                json_data = json.load(cache_reader)
+            self.read_from_cache()
 
-            self.langs_list = json_data['langs_list']
-            self.lang_ngrams_log_probs_list = json_data['lang_ngrams_log_probs_list']
+    def write_to_cache(self):
+        self.csv_data = self.get_csv_data()
+
+        self.langs_list = self.get_langs()
+        self.lang_ngrams_log_probs_list = self.get_lang_ngrams_log_probs()
+
+        cache = {
+            'langs_list': self.langs_list,
+            'lang_ngrams_log_probs_list': self.lang_ngrams_log_probs_list
+        }
+
+        print(f'Writing cache to {self.cache_path}')
+        with open(self.cache_path,'w', encoding='utf-8') as cache_writer:
+            json.dump(cache, cache_writer, indent=4)
+
+    def read_from_cache(self):
+        print(f'Reading cache from {self.cache_path}')
+        with open(self.cache_path, 'r', encoding='utf-8') as cache_reader:
+            json_data = json.load(cache_reader)
+
+        self.langs_list = json_data['langs_list']
+        self.lang_ngrams_log_probs_list = json_data['lang_ngrams_log_probs_list']
 
     def get_csv_data(self):
         return pd.read_csv(self.csv_path, encoding='utf-8').dropna()

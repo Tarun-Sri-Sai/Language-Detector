@@ -27,13 +27,29 @@ export class InputComponent {
       return
     }
 
-    this.http.get<any>(`http://localhost:5000/detect-language?input_text=${this.textInput}`)
+    this.http.post<any>('http://localhost:5000/detect-language', { 'text_input': this.textInput })
+      .subscribe({
+        next: (response) => { },
+        error: (error) => {
+          console.error("Couldn't post text due to: ", error)
+        }
+      })
+
+    this.http.get<any>('http://localhost:5000/detect-language')
       .subscribe({
         next: (response) => {
-          this.app.result = `This text is in ${response.language_code}`
+          this.app.result = response['language_code']
         },
         error: (error) => {
-          console.error('Error occurred during language detection:', error)
+          console.error("Couldn't get language due to: ", error)
+        }
+      })
+
+    this.http.delete<any>('http://localhost:5000/detect-language')
+      .subscribe({
+        next: (response) => { },
+        error: (error) => {
+          console.error("Couldn't delete language data due to: ", error)
         }
       })
 

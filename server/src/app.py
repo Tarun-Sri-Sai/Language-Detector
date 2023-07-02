@@ -27,6 +27,8 @@ class App:
         else:
             self.read_from_cache()
 
+        self.language_code = ''
+
     def write_to_cache(self):
         self.csv_data = self.get_csv_data()
 
@@ -39,7 +41,7 @@ class App:
         }
 
         print(f'Writing cache to {self.cache_path}')
-        with open(self.cache_path,'w', encoding='utf-8') as cache_writer:
+        with open(self.cache_path, 'w', encoding='utf-8') as cache_writer:
             json.dump(cache, cache_writer, indent=4)
 
     def read_from_cache(self):
@@ -87,7 +89,7 @@ class App:
     def get_log_prob(self, text_ngrams, lang_ngrams_log_probs):
         return sum(lang_ngrams_log_probs.get(ngram, math.log(1e-10)) for ngram in text_ngrams)
 
-    def detect(self, text):
+    def compute_language(self, text):
         text = text[: self.MAX_INPUT_CHARS]
 
         text_ngrams = self.get_ngrams(text, self.N)
@@ -99,4 +101,10 @@ class App:
         result = self.langs_list[
             log_prob_dist_list.index(max(log_prob_dist_list))
         ]
-        return result.upper()
+        self.language_code = result.upper()
+
+    def get_language(self):
+        return self.language_code
+
+    def clear_language(self):
+        self.language_code = ''

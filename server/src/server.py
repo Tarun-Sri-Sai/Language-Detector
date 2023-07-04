@@ -1,23 +1,23 @@
+from flask import Flask, request, jsonify
+from flask_cors import CORS
+
 from app import App
 
-import flask as fl
-import flask_cors as fc
 
-
-flask_app = fl.Flask(__name__)
-fc.CORS(flask_app)
+flask_app = Flask(__name__)
+CORS(flask_app)
 lang_app = App()
 
 
 @flask_app.route('/detect-language', methods=['PUT', 'GET'])
 def detect_language_endpoint():
-    method = fl.request.method
+    method = request.method
 
     match method:
         case 'PUT':
-            text_input = fl.request.get_json()['text_input']
+            text_input = request.get_json()['text_input']
             lang_app.compute_language(text_input)
-            return fl.jsonify({'message': 'Success'}), 200
+            return jsonify({'message': 'Success'}), 200
 
         case 'GET':
             language_code = lang_app.get_language()

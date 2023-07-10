@@ -32,7 +32,7 @@ export class InputComponent {
   }
 
   computeLanguage(): void {
-    this.http.put<any>('http://localhost:5000/detect-language', { 'text_input': this.textInput })
+    this.http.put<any>('http://localhost:5000/language_detector/detect_language', { 'text_input': this.textInput })
       .subscribe({
         next: (response) => {
           this.getLanguageCode()
@@ -44,7 +44,7 @@ export class InputComponent {
   }
 
   getLanguageCode(): void {
-    this.http.get<any>('http://localhost:5000/detect-language')
+    this.http.get<any>('http://localhost:5000/language_detector/detect_language')
     .subscribe({
       next: (response) => {
         this.app.result = response['language_code']

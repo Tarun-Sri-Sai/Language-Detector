@@ -9,7 +9,7 @@ CORS(flask_app)
 lang_app = App()
 
 
-@flask_app.route('/detect-language', methods=['PUT', 'GET'])
+@flask_app.route('/language_detector/detect_language', methods=['PUT', 'GET'])
 def detect_language_endpoint():
     method = request.method
 

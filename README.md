@@ -22,7 +22,7 @@ Language Detector is an application that can detect the language of a text acros
 - For Windows, navigating to the repository in Command Prompt and running the following command will finish setup:
 
     ```bash
-    setup
+    build
     ```
 
 ## Usage
@@ -30,7 +30,7 @@ Language Detector is an application that can detect the language of a text acros
 - For Windows, navigating to the repository in Command Prompt and running the following command will launch a test version of the application at <localhost:4200>:
 
     ```bash
-    launch
+    start
     ```
 
 - The application automatically detects when valid number of characters have been entered in a period of 0.5 sec.

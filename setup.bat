@@ -1,4 +1,4 @@
 @echo off
 
 start cmd /k "pip install pandas flask flask-cors & exit"
-start cmd /k "cd language-detector & npm install & exit"
+start cmd /k "cd language-detector & npm install & npm install @angular/cli & npm audit fix --force & exit"

@@ -9,9 +9,14 @@ import { InputComponent } from './input/input.component';
 import { ResultComponent } from './result/result.component';
 
 @NgModule({
-  declarations: [AppComponent, TitleComponent, InputComponent, ResultComponent],
-  imports: [BrowserModule, FormsModule, HttpClientModule],
-  providers: [],
-  bootstrap: [AppComponent],
+    declarations: [
+        AppComponent,
+        TitleComponent,
+        InputComponent,
+        ResultComponent,
+    ],
+    imports: [BrowserModule, FormsModule, HttpClientModule],
+    providers: [],
+    bootstrap: [AppComponent],
 })
 export class AppModule {}

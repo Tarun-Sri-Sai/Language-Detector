@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { AppService } from '../app.service';
-import { HttpClient } from '@angular/common/http';
+import { LanguageService } from '../language.service';
 
 @Component({
   selector: 'app-input',
@@ -9,42 +8,9 @@ import { HttpClient } from '@angular/common/http';
 })
 export class InputComponent {
   textInput: string = '';
-  private timeout: boolean = false;
   minCharacters: number = 20;
-  private timeoutMillis: number = 100;
 
-  constructor(private http: HttpClient, private app: AppService) {}
-
-  detectLanguage(): void {
-    if (this.timeout) {
-      return;
-    }
-
-    this.timeout = true;
-
-    if (!this.isValidLength()) {
-      this.resetTimeout();
-      return;
-    }
-
-    this.computeLanguage();
-    this.resetTimeout();
-  }
-
-  computeLanguage(): void {
-    this.http
-      .post<any>('http://localhost:5000/language_detector/language', {
-        text_input: this.textInput,
-      })
-      .subscribe({
-        next: (response) => {
-          this.app.result = response['language_code'];
-        },
-        error: (error) => {
-          console.error("Couldn't compute language due to: ", error);
-        },
-      });
-  }
+  constructor(private languageService: LanguageService) {}
 
   isValidLength(): boolean {
     return (
@@ -52,9 +18,10 @@ export class InputComponent {
     );
   }
 
-  resetTimeout(): void {
-    setTimeout(() => {
-      this.timeout = false;
-    }, this.timeoutMillis);
+  sendInput(): void {
+    if (!this.isValidLength()) {
+      return;
+    }
+    this.languageService.detectLanguage(this.textInput);
   }
 }

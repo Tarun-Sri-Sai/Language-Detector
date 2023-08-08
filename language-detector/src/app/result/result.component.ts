@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AppService } from '../app.service';
+import { LanguageService } from '../language.service';
 
 @Component({
   selector: 'app-result',
@@ -7,5 +7,5 @@ import { AppService } from '../app.service';
   styleUrls: ['./result.component.css'],
 })
 export class ResultComponent {
-  constructor(public app: AppService) {}
+  constructor(public languageService: LanguageService) {}
 }

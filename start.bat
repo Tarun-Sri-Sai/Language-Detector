@@ -1,7 +1,7 @@
 @echo off
 
 start cmd /k ^
-    "cd server/src" ^
+    "cd server" ^
     "& python server.py"
 
 start cmd /k ^

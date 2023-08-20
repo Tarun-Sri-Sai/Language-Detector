@@ -6,11 +6,10 @@ from math import log
 from string import punctuation
 
 
-class App:
+class Language:
     def __init__(self):
         self.N = 3
         self.MAX_INPUT_CHARS = 1024
-
         self.cache_dir = path.join('..', 'data', 'cache')
         if not path.isdir(self.cache_dir):
             mkdir(self.cache_dir)
@@ -21,20 +20,15 @@ class App:
 
         self.csv_dir = path.join('..', 'data')
         self.csv_path = path.join(self.csv_dir, 'lang_13k.csv')
-
         if open(self.cache_path, 'r', encoding='utf-8').read().strip() == '{}':
             self.write_to_cache()
         else:
             self.read_from_cache()
 
-        self.language_code = ''
-
     def write_to_cache(self):
         self.csv_data = self.get_csv_data()
-
         self.langs_list = self.get_langs()
         self.lang_ngrams_log_probs_list = self.get_lang_ngrams_log_probs()
-
         cache = {
             'langs_list': self.langs_list,
             'lang_ngrams_log_probs_list': self.lang_ngrams_log_probs_list
@@ -74,11 +68,12 @@ class App:
 
     def get_lang_ngrams_log_probs(self):
         lang_range = range(len(self.langs_list))
-
         lang_text_list = [' '.join([sentence for sentence in self.csv_data[self.csv_data['lang'] == lang]['sentence']])
                           for lang in self.langs_list]
+        
         lang_ngrams_list = [self.get_ngrams(lang_text_list[i], self.N)
                             for i in lang_range]
+        
         return [self.compute_log_probs(lang_ngrams_list[i])
                 for i in lang_range]
 
@@ -88,15 +83,11 @@ class App:
 
     def compute_language(self, text):
         text = text[: self.MAX_INPUT_CHARS]
-
         text_ngrams = self.get_ngrams(text, self.N)
-
         log_prob_dist_list = [self.get_log_prob(text_ngrams, self.lang_ngrams_log_probs_list[i])
                               for i in range(len(self.langs_list))]
 
         result = self.langs_list[log_prob_dist_list.index(
             max(log_prob_dist_list))]
-        self.language_code = result.upper()
 
-    def get_language(self):
-        return self.language_code
+        return result.upper()

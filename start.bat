@@ -5,5 +5,5 @@ start cmd /k ^
     "& python server.py"
 
 start cmd /k ^
-    "cd language-detector" ^
+    "cd frontend" ^
     "& npm start"

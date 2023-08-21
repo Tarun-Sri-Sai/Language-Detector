@@ -2,9 +2,9 @@
 @import "~bootstrap/dist/css/bootstrap.min.css";
 
 .top-spacing {
-    margin-top: 10px;
+  margin-top: 10px;
 }
 
 .horizontal-center {
-    text-align: center;
+  text-align: center;
 }

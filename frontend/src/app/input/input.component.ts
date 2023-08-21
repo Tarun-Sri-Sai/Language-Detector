@@ -3,8 +3,25 @@ import { LanguageService } from '../language.service';
 
 @Component({
   selector: 'app-input',
-  templateUrl: './input.component.html',
-  styleUrls: ['./input.component.css'],
+  template: `
+    <h5 class="form-group">
+      <label class="top-spacing" for="text"> Enter Text: </label>
+      <textarea
+        class="form-control top-spacing"
+        id="text"
+        [(ngModel)]="textInput"
+        (input)="sendInput()"
+      >
+      </textarea>
+    </h5>
+    <div *ngIf="!isValidLength()" class="alert alert-warning">
+      Please enter atleast {{ minCharacters }} characters
+    </div>
+
+  `,
+  styles: [`
+
+  `],
 })
 export class InputComponent {
   textInput: string = '';
@@ -25,3 +42,4 @@ export class InputComponent {
     this.languageService.detectLanguage(this.textInput);
   }
 }
+

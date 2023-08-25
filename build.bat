@@ -1,12 +1,7 @@
 @echo off
 
 start cmd /k ^
-    "pip install pandas flask flask-cors" ^
-    "& exit"
+    "pip install pandas flask flask-cors & exit"
 
 start cmd /k ^
-    "cd frontend" ^
-    "& npm install @angular/cli" ^
-    "& npm install" ^
-    "& npm audit fix" ^
-    "& exit"
+    "cd frontend & npm install & npm audit fix & exit"

@@ -10,7 +10,7 @@ class Language:
     def __init__(self):
         self.N = 3
         self.MAX_INPUT_CHARS = 1024
-        self.cache_dir = path.join('..', 'data', 'cache')
+        self.cache_dir = path.join('data', 'cache')
         if not path.isdir(self.cache_dir):
             mkdir(self.cache_dir)
 
@@ -18,7 +18,7 @@ class Language:
         if not path.isfile(self.cache_path):
             system(f'echo {{}} > {self.cache_path}')
 
-        self.csv_dir = path.join('..', 'data')
+        self.csv_dir = path.join('data')
         self.csv_path = path.join(self.csv_dir, 'lang_13k.csv')
         if open(self.cache_path, 'r', encoding='utf-8').read().strip() == '{}':
             self.write_to_cache()

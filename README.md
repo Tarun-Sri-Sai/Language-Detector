@@ -8,7 +8,7 @@ A web application that takes in text and detects the language of the text. This 
 
 This project requires the following software:
 
-- docker:24.0.6
+- docker:24
 
 ## Usage
 

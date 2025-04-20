@@ -4,17 +4,12 @@ from pandas import read_csv
 from re import sub
 from math import log
 from string import punctuation
-from zipfile import ZipFile
 
 
 class Language:
     def __init__(self):
         self.N = 3
         self.MAX_INPUT_CHARS = 1024
-
-        if not path.isdir('data') and path.isfile('data.zip'):
-            with ZipFile('data.zip', 'r') as f:
-                f.extractall()
 
         self.cache_dir = path.join('data', 'cache')
         if not path.isdir(self.cache_dir):
@@ -69,17 +64,22 @@ class Language:
 
     def compute_log_probs(self, ngrams):
         sum_value = sum(value for _, value in ngrams.items())
-        return {key: log(value) - log(sum_value) 
+        return {key: log(value) - log(sum_value)
                 for key, value in ngrams.items()}
 
     def get_lang_ngrams_log_probs(self):
         lang_range = range(len(self.langs_list))
-        lang_text_list = [' '.join([sentence for sentence in self.csv_data[self.csv_data['lang'] == lang]['sentence']])
-                          for lang in self.langs_list]
-        
+        lang_text_list = [
+            ' '.join([
+                sentence
+                for sentence in (self.csv_data[self.csv_data['lang'] == lang]
+                                 ['sentence'])])
+            for lang in self.langs_list
+        ]
+
         lang_ngrams_list = [self.get_ngrams(lang_text_list[i], self.N)
                             for i in lang_range]
-        
+
         return [self.compute_log_probs(lang_ngrams_list[i])
                 for i in lang_range]
 
@@ -90,8 +90,11 @@ class Language:
     def compute_language(self, text):
         text = text[: self.MAX_INPUT_CHARS]
         text_ngrams = self.get_ngrams(text, self.N)
-        log_prob_dist_list = [self.get_log_prob(text_ngrams, self.lang_ngrams_log_probs_list[i])
-                              for i in range(len(self.langs_list))]
+        log_prob_dist_list = [
+            self.get_log_prob(text_ngrams,
+                              self.lang_ngrams_log_probs_list[i])
+            for i in range(len(self.langs_list))
+        ]
 
         result = self.langs_list[log_prob_dist_list.index(
             max(log_prob_dist_list))]

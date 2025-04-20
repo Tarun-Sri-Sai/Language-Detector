@@ -1,4 +1,4 @@
-from os import path, mkdir, system
+from os import path, makedirs
 from json import load, dump
 from pandas import read_csv
 from re import sub
@@ -12,16 +12,13 @@ class Language:
         self.MAX_INPUT_CHARS = 1024
 
         self.cache_dir = path.join('data', 'cache')
-        if not path.isdir(self.cache_dir):
-            mkdir(self.cache_dir)
-
-        self.cache_path = path.join(self.cache_dir, 'cache.json')
-        if not path.isfile(self.cache_path):
-            system(f'echo {{}} > {self.cache_path}')
+        makedirs(self.cache_dir, exist_ok=True)
 
         self.csv_dir = path.join('data')
         self.csv_path = path.join(self.csv_dir, 'lang_13k.csv')
-        if open(self.cache_path, 'r', encoding='utf-8').read().strip() == '{}':
+
+        self.cache_path = path.join(self.cache_dir, 'cache.json')
+        if not path.isfile(self.cache_path):
             self.write_to_cache()
         else:
             self.read_from_cache()
@@ -37,7 +34,7 @@ class Language:
 
         print(f'Writing cache to {self.cache_path}')
         with open(self.cache_path, 'w', encoding='utf-8') as cache_writer:
-            dump(cache, cache_writer, indent=4)
+            dump(cache, cache_writer)
 
     def read_from_cache(self):
         print(f'Reading cache from {self.cache_path}')

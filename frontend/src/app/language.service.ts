@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
@@ -23,7 +23,7 @@ export class LanguageService {
   makeRequest(textInput: string): void {
     this.http
       .get<any>('http://localhost/api/language', {
-        text_input: textInput,
+        params: new HttpParams().set('text_input', textInput),
       })
       .subscribe({
         next: (response) => {

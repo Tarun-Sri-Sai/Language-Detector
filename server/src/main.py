@@ -8,6 +8,6 @@ language = Language()
 
 @server.route('/api/language', methods=['GET'])
 def detect_language_endpoint():
-    text_input = request.json['text_input']
+    text_input = request.args['text_input']
     language_code = language.compute_language(text_input)
     return {'language_code': language_code}

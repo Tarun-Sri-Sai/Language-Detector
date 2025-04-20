@@ -22,7 +22,7 @@ export class LanguageService {
 
   makeRequest(textInput: string): void {
     this.http
-      .post<any>('http://localhost:5000/language_detector/language', {
+      .get<any>('http://localhost/api/language', {
         text_input: textInput,
       })
       .subscribe({
